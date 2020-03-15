@@ -1,6 +1,8 @@
 # clothingClassification
-An image classifier using machine learning algorithms. In this basic program we will focus on the classification of clothing.
-
+An image classifier using machine learning algorithms. In this basic program we will focus on the classification of clothing.  
+The project is based to the <q>Tensorflow Framwork</q> link is bellow
 ## Requirement 
 - [Pyhton](https://www.python.org/downloads/)
-- [Tensorflow 2](https://www.tensorflow.org/install#install-tensorflow-2)
+- [<span title="Download and install Tensorflow library">Tensorflow</span> 2](https://www.tensorflow.org/install)
+
+#
