@@ -1,6 +1,9 @@
 langage: python
 pyhton:
-- 3.6
-- 3.7
-os : linux
-dist : "bionic"
+ - 3.6
+ - 3.7
+install:
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  - pytest
