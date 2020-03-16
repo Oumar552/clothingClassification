@@ -1,0 +1,6 @@
+langage:python
+pyhton:
+- 3.6
+- 3.7
+os : linux
+dist : "bionic"
