@@ -6,8 +6,6 @@ The project is based to the <q>Tensorflow Framwork</q> link is bellow in [requir
 - [<span title="Download and install Tensorflow library">Tensorflow</span> 2](https://www.tensorflow.org/install)
 - Numpy, pandas matplotlib
   - Using [Anaconda](https://www.anaconda.com/distribution/), then install :  
-  ```python bach batch
-  conda install numpy matplotlib
-  ```
+  ```conda install numpy matplotlib```
   - Using [pip](https://www.scipy.org/install.html#installing-via-pip)
 #
