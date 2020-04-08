@@ -1,51 +1,141 @@
 #!/usr/python3
 # -*- coding: utf-8 -*-
-# TensorFlow and tf.keras
 import tensorflow as tf
 from tensorflow import keras
-
-# Helper libraries
-import numpy as np
-import matplotlib.pyplot as plt
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
 
 fashion_mnist = keras.datasets.fashion_mnist
 
+#Each image is mapped to a single label. Since the class names are not included with the dataset, store them here to use later when plotting the images:
+#class_names_en = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+#               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+
+class_names_fr = ['T-shirt/Haut', 'Pantalon', 'Tricot', 'Robe', 'Manteau',
+               'Sandale', 'Chemise', 'Basket', 'Sac', 'Bottine']
+
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
+#Normalisation of data every pixel will be equal 0<pixel<1
+train_images /= 255.0
+test_images  /= 255.0
 
-#Each image is mapped to a single label. Since the class names are not included with the dataset, store them here to use later when plotting the images:
-class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
-               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-#Build the model
+#Divide and Reshape of the dataset
+# - Train    data
+# - Validate data
+# - Test     data
+
+##Validate data shape : ()             --> ( 5000, 28, 28)
+##Train    data shape : (60000, 28, 28)--> (55000, 28, 28)
+train_images, validate_images = train_images[5000:],train_images[:5000]
+train_labels, validate_labels = train_labels[5000:],train_labels[:5000]
+
+## Reshape data to add explicitly...
+##...the shannel of color (Important for the convolutioning step):
+#Train    images :(55000, 28, 28) --> (55000, 28, 28,1)
+#Validate images :( 5000, 28, 28) --> ( 5000, 28, 28,1)
+#test     images :(10000, 28, 28) --> (10000, 28, 28,1)
+images_width  = train_images.shape[1]
+images_height = train_images.shape[1]
+
+train_images = train_images.reshape(train_images.shape[0], images_width, images_height, 1)
+validate_images = validate_images.reshape(validate_images.shape[0], images_width, images_height, 1)
+test_images = test_images.reshape(test_images.shape[0], images_width, images_height, 1)
+
+
+
+#Build the model with 2 convD2 layers empiled
 ###Set up the layers
-model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(28, 28)),
-    keras.layers.Dense(128, activation='relu'),
-    keras.layers.Dense(10)
+model = models.Sequential(
+[
+	Conv2D(filters=64,kernel_size=(3,3),padding='same',activation='relu',input_shape=(images_width,images_height,1)),
+	MaxPooling2D(2,2),
+	Dropout(0.3),
+
+	Conv2D(filters=64,kernel_size=(3,3),padding='same',activation='relu'),
+	MaxPooling2D(2,2),
+	Dropout(0.3),
+
+	Conv2D(filters=64,kernel_size=(3,3),padding='same',activation='relu'),
+	MaxPooling2D(2,2),
+	Dropout(0.3),
+
+	Flatten(),
+	Dense(256,activation='relu'),
+	Dense(10,activation='softmax')
 ])
 
 #Compile the model
 model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              loss=tf.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
 #Feed the model
-model.fit(train_images, train_labels, epochs=10)
+model.fit(train_images,
+		 train_labels,
+		 batch_size=64,
+		 epochs=10,
+		 validation_data=(validate_images,validate_labels)
+		 )
 
-#Evaluate accuracy
-test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
-print('\nTest accuracy:', test_acc)
+
+classifications = model.predict(test_images)
+
+label = 8452
+name = test_labels[label]
+
+#Getting the predicted value 
+print(f'Probabities of the {label}th element : \n{classifications[label]}')
+name_predicted = classifications[label].argmax()
+
+#Test 
+print(f'\nThis {label}th element is probably : {class_names_fr[name_predicted]}')
+print(f'This prediction is {class_names_fr[name_predicted] == class_names_fr[name]}') #Shows if the prediction is true or false
 
 
-#Make predictions
-probability_model = tf.keras.Sequential([model, 
-                                         tf.keras.layers.Softmax()])
-predictions = probability_model.predict(test_images)
-print(predictions[0])
-np.argmax(predictions[0])
-np.argmax(predictions[0])
 
+
+test_images = test_images.reshape(test_images.shape[0], images_width, images_height)
+plt.figure(figsize=(6,6))
+plt.subplot(1,2,1)
+plt.imshow(test_images[label])
+plt.title(class_names_fr[name])
+
+plt.subplot(1,2,2)
+plt.imshow(test_images[label])
+
+if class_names_fr[name_predicted] == class_names_fr[name]:
+  plt.title(class_names_fr[name_predicted],c='blue')
+else:
+  plt.title(class_names_fr[name_predicted],c='red')
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 #Graph this to look at the full set of 10 class predictions.
 def plot_image(i, predictions_array, true_label, img):
   predictions_array, true_label, img = predictions_array, true_label[i], img[i]
@@ -128,3 +218,4 @@ print(predictions_single)
 plot_value_array(1, predictions_single[0], test_labels)
 _ = plt.xticks(range(10), class_names, rotation=45)
 np.argmax(predictions_single[0])
+"""
