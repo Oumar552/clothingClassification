@@ -28,6 +28,3 @@ before_script:
 
 script:
 - python begin.py
-
-notifications:
-  email: true
