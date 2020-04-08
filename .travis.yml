@@ -1,9 +1,29 @@
-langage: python
+langage: 'python'
+dist : bionic
 pyhton:
-- 3.6
-- 3.7
+ - '3.6'
+ - '3.7'
+ - '3.8'
+
+os: linux
+branches:
+  only: 
+    - master
+
+before_install:
+ - python --version
+ - pip install -U pip
+ - pip install -U pytest
+ - pip install codev
+   
 install:
-- pip install -r requirements.txt
+- pip install tensorflow
+- pip install numpy
+- pip install matplotlib
 # command to run tests
 script:
-- pytest
+  - echo "Passed"
+
+
+notifications:
+  email: false
