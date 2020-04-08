@@ -17,9 +17,8 @@ class_names_fr = ['T-shirt/Haut', 'Pantalon', 'Tricot', 'Robe', 'Manteau',
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
 #Normalisation of data every pixel will be equal 0<pixel<1
-train_images /= 255.0
-test_images  /= 255.0
-
+train_images = train_images/255.0
+test_images  = test_images/255.0
 
 #Divide and Reshape of the dataset
 # - Train    data
