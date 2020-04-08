@@ -1,14 +1,18 @@
-langage: "python"
-dist : bionic
-python:
- - "3.7"
-
 os: linux
+dist : bionic
+
+langage: "Python"
+Python:
+ - "3.6"
+ - "3.7"
+ - '3.8'
+
 branches:
   only: 
     - master
 
 before_install:
+ - sudo apt install python
  - python --version
  - pip install -U pip
  - sudo apt install --yes gcc
@@ -17,10 +21,9 @@ install:
 - pip install tensorflow
 - pip install numpy
 - pip install matplotlib
+- pip install panda
 
 script:
-  - echo "Passed"
-
 
 notifications:
-  email: false
+  email: true
