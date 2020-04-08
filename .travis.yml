@@ -1,7 +1,7 @@
 os: linux
 dist : bionic
 
-langage: "python"
+langage: python
 python:
  - "3.6"
  - "3.7"
@@ -18,10 +18,16 @@ before_install:
  - sudo apt install --yes gcc
    
 install:
-- pip install tensorflow
-- pip install numpy
-- pip install matplotlib
-- pip install panda
+ - pip install tensorflow
+ - pip install numpy
+ - pip install matplotlib
+ - pip install panda
+
+before_script:
+ - chmod +x begin.py
+
+script:
+- python begin.py
 
 notifications:
   email: true
