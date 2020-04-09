@@ -24,9 +24,6 @@ before_install:
  - sudo apt-get --yes update
 # Install NVIDIA driver
  - sudo apt-get --yes install  --no-install-recommends nvidia-driver-430
- - sudo apt --yes full-upgrade
- - sudo apt --yes autoclean
- - sudo apt --yes autoremove
  
 install:
  - pip install tensorflow
