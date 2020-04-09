@@ -59,10 +59,6 @@ model = models.Sequential(
 	MaxPooling2D(2,2),
 	Dropout(0.3),
 
-	Conv2D(filters=64,kernel_size=(3,3),padding='same',activation='relu'),
-	MaxPooling2D(2,2),
-	Dropout(0.3),
-
 	Flatten(),
 	Dense(256,activation='relu'),
 	Dense(10,activation='softmax')
