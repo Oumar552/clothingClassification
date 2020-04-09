@@ -14,6 +14,7 @@ fashion_mnist = keras.datasets.fashion_mnist
 #class_names_en = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
 #               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
+## Les noms de classes
 class_names_fr = ['T-shirt/Haut', 'Pantalon', 'Tricot', 'Robe', 'Manteau',
                'Sandale', 'Chemise', 'Basket', 'Sac', 'Bottine']
 
