@@ -1,9 +1,12 @@
 #!/usr/python3
 # -*- coding: utf-8 -*-
+import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2D
+
 
 fashion_mnist = keras.datasets.fashion_mnist
 
@@ -91,9 +94,6 @@ name_predicted = classifications[label].argmax()
 #Test 
 print(f'\nThis {label}th element is probably : {class_names_fr[name_predicted]}')
 print(f'This prediction is {class_names_fr[name_predicted] == class_names_fr[name]}') #Shows if the prediction is true or false
-
-
-
 
 test_images = test_images.reshape(test_images.shape[0], images_width, images_height)
 plt.figure(figsize=(6,6))
