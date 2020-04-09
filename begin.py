@@ -81,6 +81,10 @@ model.fit(train_images,
 		 validation_data=(validate_images,validate_labels)
 		 )
 
+model.reset_metrics()
+# Save the model
+model.save('model_PFE_mnist.h5')
+model.save('model_PFE_mnist_tf.keras_python.h5', save_format='tf')
 
 classifications = model.predict(test_images)
 
